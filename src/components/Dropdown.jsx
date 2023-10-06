@@ -10,6 +10,34 @@ import {
 import Button from './Button';
 import { FixedSizeList as List } from 'react-window';
 
+/**
+ * Dropdown Component.
+ * 
+ * Provides a dropdown selection menu. Supports single and multi-select options.
+ * 
+ * @component
+ * 
+ * @param {string} width - The width of the dropdown. Values: 'sm', 'md', 'lg'. Defaults to 'md'.
+ * @param {string} height - The height of the dropdown panel. Values: 'sm', 'md', 'lg'. Defaults to 'sm'.
+ * @param {boolean} multiSelect - Enables multi-selection mode. Defaults to false.
+ * @param {Array<{ label: string, value: string }>} options - The options available for selection in the dropdown.
+ * @param {Function} onSelectionsChange - Callback function that is called when selections change.
+ * 
+ * @example
+ * // Single-select dropdown
+ * <Dropdown
+ *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
+ *      onSelectionsChange={handleSelection} />
+ * 
+ * // Multi-select dropdown
+ * <Dropdown
+ *      multiSelect
+ *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
+ *      onSelectionsChange={handleMultipleSelections} />
+ * 
+ * @returns {ReactElement} The Dropdown component.
+ */
+
 const DROPDOWN_SIZES = {
     sm: { width: 'w-40', height: 300 },
     md: { width: 'w-72', height: 600 },
@@ -19,8 +47,8 @@ const DROPDOWN_SIZES = {
 export default function Dropdown({
     width = 'md',
     height = 'sm',
-    options,
     multiSelect = false,
+    options,
     onSelectionsChange,
 }) {
     const [selections, setSelections] = useState(new Set());
@@ -131,11 +159,7 @@ export default function Dropdown({
                 </span>
             </Panel>
             {isOpen && (
-                <Panel
-                    className={classNames(
-                        'absolute flex flex-col gap-2'
-                    )}
-                >
+                <Panel className={classNames('absolute flex flex-col gap-2')}>
                     {multiSelect && (
                         <div className="flex justify-between">
                             <Button onClick={toggleSelectAll}>
@@ -160,6 +184,7 @@ export default function Dropdown({
 
 Dropdown.propTypes = {
     width: PropTypes.string,
+    height: PropTypes.string,
     multiSelect: PropTypes.bool,
     options: PropTypes.arrayOf(
         PropTypes.shape({
@@ -167,12 +192,11 @@ Dropdown.propTypes = {
             value: PropTypes.string.isRequired,
         })
     ).isRequired,
-    onSelectionsChange: PropTypes.func,
+    onSelectionsChange: PropTypes.func.isRequired,
 };
 
 Dropdown.defaultProps = {
     width: 'md',
     height: 'sm',
     multiSelect: false,
-    onSelectionsChange: () => {},
 };

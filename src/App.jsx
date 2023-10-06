@@ -33,7 +33,7 @@ export default function App() {
                     onSelectionsChange={handleDropdownChange}
                 />
                 <Dropdown
-                    multiSelect={true}
+                    multiSelect
                     options={generatedOptions}
                     onSelectionsChange={handleDropdownChange}
                 />
