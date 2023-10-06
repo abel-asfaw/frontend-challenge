@@ -78,9 +78,12 @@ export default function Dropdown({
                 newSelections.add(option);
             }
         } else {
-            newSelections = new Set([option]);
+            if (selections.has(option)) {
+                newSelections = new Set();
+            } else {
+                newSelections = new Set([option]);
+            }
         }
-
         setSelections(newSelections);
         onSelectionsChange([...newSelections]);
     };
