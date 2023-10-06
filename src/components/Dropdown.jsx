@@ -133,7 +133,7 @@ export default function Dropdown({
             {isOpen && (
                 <Panel
                     className={classNames(
-                        'absolute flex flex-col gap-2 overflow-scroll'
+                        'absolute flex flex-col gap-2'
                     )}
                 >
                     {multiSelect && (
@@ -147,7 +147,7 @@ export default function Dropdown({
                     )}
                     <List
                         height={panelHeight}
-                        itemSize={40}
+                        itemSize={35}
                         itemCount={options.length}
                     >
                         {renderedOptions}
