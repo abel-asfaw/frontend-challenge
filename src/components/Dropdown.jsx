@@ -23,13 +23,13 @@ export default function Dropdown({
     multiSelect = false,
     onSelectionsChange,
 }) {
-    const [selections, setSelections] = useState([]);
+    const [selections, setSelections] = useState(new Set());
     const [isOpen, setIsOpen] = useState(false);
 
     const divElement = useRef();
 
     const computedWidthClass = DROPDOWN_SIZES[width].width;
-    const reactWindowHeight = DROPDOWN_SIZES[height].height;
+    const panelHeight = DROPDOWN_SIZES[height].height;
 
     // Handle clicks outside of the Dropdown component
     useEffect(() => {
@@ -50,18 +50,16 @@ export default function Dropdown({
     }, []);
 
     const selectAllItems = () => {
-        if (selections.length !== options.length) {
-            const newSelections = options;
-            setSelections(newSelections);
-            onSelectionsChange(newSelections);
+        if (selections.size !== options.length) {
+            setSelections(new Set(options));
+            onSelectionsChange(options);
         }
     };
 
     const deselectAllItems = () => {
-        if (selections.length) {
-            const newSelections = [];
-            setSelections([]);
-            onSelectionsChange(newSelections);
+        if (selections.size) {
+            setSelections(new Set());
+            onSelectionsChange([]);
         }
     };
 
@@ -70,33 +68,26 @@ export default function Dropdown({
     };
 
     const handleOptionClick = (option) => {
-        let isOptionSelected = false;
-
-        const newSelections = selections.reduce((acc, curr) => {
-            if (curr.value === option.value) {
-                isOptionSelected = true;
-                return acc;
-            }
-            return [...acc, curr];
-        }, []);
-
-        if (isOptionSelected) {
-            setSelections(newSelections);
-        } else {
-            if (multiSelect) {
-                setSelections([...newSelections, option]);
+        let newSelections;
+        
+        if (multiSelect) {
+            newSelections = new Set(selections);
+            if (newSelections.has(option)) {
+                newSelections.delete(option);
             } else {
-                setSelections([option]);
+                newSelections.add(option);
             }
+        } else {
+            newSelections = new Set([option]);
         }
-        onSelectionsChange(selections);
+
+        setSelections(newSelections);
+        onSelectionsChange([...newSelections]);
     };
 
     const renderedOptions = ({ index, style }) => {
         const option = options[index];
-        const isSelected = selections.some(
-            (selection) => selection.value === option.value
-        );
+        const isSelected = selections.has(option);
 
         const classes = classNames(
             'flex cursor-pointer items-center justify-between p-2 rounded',
@@ -127,9 +118,9 @@ export default function Dropdown({
                 onClick={handleClick}
             >
                 <div className="truncate">
-                    {selections.length
-                        ? selections
-                              .slice(0, 100)
+                    {selections.size
+                        ? [...selections]
+                              .slice(0, 50)
                               .map((selection) => selection.label)
                               .join(', ')
                         : 'Select...'}
@@ -157,7 +148,7 @@ export default function Dropdown({
                         </div>
                     )}
                     <List
-                        height={reactWindowHeight}
+                        height={panelHeight}
                         itemSize={40}
                         itemCount={options.length}
                     >

@@ -13,7 +13,7 @@ export default function App() {
     ];
 
     const generatedOptions = [];
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 1_000_000; i++) {
         const label = `Option ${i + 1}`;
         const value = `option${i + 1}`;
         generatedOptions.push({ label, value });
