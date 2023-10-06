@@ -49,18 +49,12 @@ export default function Dropdown({
         };
     }, []);
 
-    const selectAllItems = () => {
-        if (selections.size !== options.length) {
-            setSelections(new Set(options));
-            onSelectionsChange(options);
-        }
-    };
+    const toggleSelectAll = () => {
+        const selectAll = selections.size !== options.length;
+        const newSelections = new Set(selectAll ? options : null);
 
-    const deselectAllItems = () => {
-        if (selections.size) {
-            setSelections(new Set());
-            onSelectionsChange([]);
-        }
+        setSelections(newSelections);
+        onSelectionsChange([...newSelections]);
     };
 
     const handleClick = () => {
@@ -69,7 +63,7 @@ export default function Dropdown({
 
     const handleOptionClick = (option) => {
         let newSelections;
-        
+
         if (multiSelect) {
             newSelections = new Set(selections);
             if (newSelections.has(option)) {
@@ -144,9 +138,10 @@ export default function Dropdown({
                 >
                     {multiSelect && (
                         <div className="flex justify-between">
-                            <Button onClick={selectAllItems}>Select all</Button>
-                            <Button onClick={deselectAllItems}>
-                                De-select all
+                            <Button onClick={toggleSelectAll}>
+                                {selections.size === options.length
+                                    ? 'Deselect all'
+                                    : 'Select all'}
                             </Button>
                         </div>
                     )}
