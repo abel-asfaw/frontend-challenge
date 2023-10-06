@@ -28,7 +28,7 @@ export default function Dropdown({
 
     const divElement = useRef();
 
-    const computedWidthClass = DROPDOWN_SIZES[width].width;
+    const panelWidth = DROPDOWN_SIZES[width].width;
     const panelHeight = DROPDOWN_SIZES[height].height;
 
     // Handle clicks outside of the Dropdown component
@@ -108,7 +108,7 @@ export default function Dropdown({
     return (
         <div
             ref={divElement}
-            className={classNames(computedWidthClass, 'relative select-none')}
+            className={classNames(panelWidth, 'relative select-none')}
         >
             <Panel
                 className="flex cursor-pointer items-center justify-between gap-2"
