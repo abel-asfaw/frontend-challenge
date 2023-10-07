@@ -12,29 +12,29 @@ import { FixedSizeList as List } from 'react-window';
 
 /**
  * Dropdown Component.
- * 
+ *
  * Provides a dropdown selection menu. Supports single and multi-select options.
- * 
+ *
  * @component
- * 
+ *
  * @param {string} width - The width of the dropdown. Values: 'sm', 'md', 'lg'. Defaults to 'md'.
  * @param {string} height - The height of the dropdown panel. Values: 'sm', 'md', 'lg'. Defaults to 'sm'.
  * @param {boolean} multiSelect - Enables multi-selection mode. Defaults to false.
  * @param {Array<{ label: string, value: string }>} options - The options available for selection in the dropdown.
  * @param {Function} onSelectionsChange - Callback function that is called when selections change.
- * 
+ *
  * @example
  * // Single-select dropdown
  * <Dropdown
  *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
  *      onSelectionsChange={handleSelection} />
- * 
+ *
  * // Multi-select dropdown
  * <Dropdown
  *      multiSelect
  *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
  *      onSelectionsChange={handleMultipleSelections} />
- * 
+ *
  * @returns {ReactElement} The Dropdown component.
  */
 
@@ -76,6 +76,13 @@ export default function Dropdown({
             document.removeEventListener('click', handler, true);
         };
     }, []);
+
+    const displaySelectedOptions = () => {
+        return [...selections]
+            .slice(0, 50)
+            .map((selection) => selection.label)
+            .join(', ');
+    };
 
     const toggleSelectAll = () => {
         const selectAll = selections.size !== options.length;
@@ -143,12 +150,7 @@ export default function Dropdown({
                 onClick={handleClick}
             >
                 <div className="truncate">
-                    {selections.size
-                        ? [...selections]
-                              .slice(0, 50)
-                              .map((selection) => selection.label)
-                              .join(', ')
-                        : 'Select...'}
+                    {selections.size ? displaySelectedOptions() : 'Select...'}
                 </div>
                 <span className="shrink-0 text-gray-600">
                     {isOpen ? (
