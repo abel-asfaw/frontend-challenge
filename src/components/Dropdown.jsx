@@ -56,8 +56,8 @@ export default function Dropdown({
 
     const divElement = useRef();
 
-    const panelWidth = DROPDOWN_SIZES[width].width;
-    const panelHeight = DROPDOWN_SIZES[height].height;
+    const dropdownWidth = DROPDOWN_SIZES[width].width;
+    const dropdownHeight = DROPDOWN_SIZES[height].height;
 
     // Handle clicks outside of the Dropdown component
     useEffect(() => {
@@ -142,7 +142,7 @@ export default function Dropdown({
     return (
         <div
             ref={divElement}
-            className={classNames(panelWidth, 'relative select-none')}
+            className={classNames(dropdownWidth, 'relative select-none')}
         >
             <Panel
                 className="flex cursor-pointer items-center justify-between gap-2"
@@ -156,7 +156,7 @@ export default function Dropdown({
                 </span>
             </Panel>
             {isOpen && (
-                <Panel className={classNames('absolute flex flex-col gap-2')}>
+                <Panel className="absolute flex flex-col gap-2">
                     {multiSelect && (
                         <div className="flex justify-between">
                             <Button onClick={toggleSelectAll}>
@@ -167,7 +167,7 @@ export default function Dropdown({
                         </div>
                     )}
                     <List
-                        height={panelHeight}
+                        height={dropdownHeight}
                         itemSize={35}
                         itemCount={options.length}
                     >
