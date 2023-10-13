@@ -92,10 +92,6 @@ export default function Dropdown({
         onSelectionsChange([...newSelections]);
     };
 
-    const handleClick = () => {
-        setIsOpen(!isOpen);
-    };
-
     const handleOptionClick = (option) => {
         let newSelections;
         const isOptionSelected = selections.has(option);
@@ -144,7 +140,7 @@ export default function Dropdown({
         >
             <Panel
                 className="flex cursor-pointer items-center justify-between gap-2"
-                onClick={handleClick}
+                onClick={() => setIsOpen(!isOpen)}
             >
                 <div className="truncate">
                     {selections.size ? displaySelectedOptions() : 'Select...'}
