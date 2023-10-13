@@ -77,6 +77,12 @@ export default function Dropdown({
         };
     }, []);
 
+    const displayCaretIcon = () => {
+        const Icon = isOpen ? AiOutlineCaretUp : AiOutlineCaretDown;
+
+        return <Icon size={12} />;
+    };
+
     const displaySelectedOptions = () => {
         return [...selections]
             .slice(0, 50)
@@ -146,11 +152,7 @@ export default function Dropdown({
                     {selections.size ? displaySelectedOptions() : 'Select...'}
                 </div>
                 <span className="shrink-0 text-gray-600">
-                    {isOpen ? (
-                        <AiOutlineCaretUp size={12} />
-                    ) : (
-                        <AiOutlineCaretDown size={12} />
-                    )}
+                    {displayCaretIcon()}
                 </span>
             </Panel>
             {isOpen && (
