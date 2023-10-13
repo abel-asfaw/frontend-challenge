@@ -98,20 +98,17 @@ export default function Dropdown({
 
     const handleOptionClick = (option) => {
         let newSelections;
+        const isOptionSelected = selections.has(option);
 
         if (multiSelect) {
             newSelections = new Set(selections);
-            if (newSelections.has(option)) {
+            if (isOptionSelected) {
                 newSelections.delete(option);
             } else {
                 newSelections.add(option);
             }
         } else {
-            if (selections.has(option)) {
-                newSelections = new Set();
-            } else {
-                newSelections = new Set([option]);
-            }
+            newSelections = new Set(isOptionSelected ? null : [option]);
         }
         setSelections(newSelections);
         onSelectionsChange([...newSelections]);
