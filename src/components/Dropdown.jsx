@@ -27,21 +27,27 @@ import { FixedSizeList as List } from 'react-window';
  * // Single-select dropdown
  * <Dropdown
  *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
- *      onSelectionsChange={handleSelection} />
+ *      onSelectionsChange={handleDropdownChange} />
  *
  * // Multi-select dropdown
  * <Dropdown
  *      multiSelect
  *      options={[{label: 'Option 1', value: '1'}, {label: 'Option 2', value: '2'}]}
- *      onSelectionsChange={handleMultipleSelections} />
+ *      onSelectionsChange={handleDropdownChange} />
  *
  * @returns {ReactElement} The Dropdown component.
  */
 
-const DROPDOWN_SIZES = {
-    sm: { width: 'w-40', height: 300 },
-    md: { width: 'w-72', height: 600 },
-    lg: { width: 'w-96', height: 900 },
+const DROPDOWN_WIDTHS = {
+    sm: 'w-40',
+    md: 'w-72',
+    lg: 'w-96',
+};
+
+const DROPDOWN_HEIGHTS = {
+    sm: 300,
+    md: 600,
+    lg: 900,
 };
 
 export default function Dropdown({
@@ -56,8 +62,8 @@ export default function Dropdown({
 
     const divElement = useRef();
 
-    const dropdownWidth = DROPDOWN_SIZES[width].width;
-    const dropdownHeight = DROPDOWN_SIZES[height].height;
+    const dropdownWidth = DROPDOWN_WIDTHS[width];
+    const dropdownHeight = DROPDOWN_HEIGHTS[height];
 
     // Handle clicks outside of the Dropdown component
     useEffect(() => {

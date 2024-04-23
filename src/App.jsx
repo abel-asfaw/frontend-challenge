@@ -7,15 +7,15 @@ export default function App() {
         { label: 'Green', value: 'green' },
         { label: 'Orange', value: 'orange' },
         {
-            label: 'Really really long label',
+            label: 'Really really really really really really really really really long label',
             value: 'long-label',
         },
     ];
 
     const generatedOptions = [];
-    for (let i = 0; i < 1_000_000; i++) {
+    for (let i = 0; i < 100_000; i++) {
         const label = `Option ${i + 1}`;
-        const value = `option${i + 1}`;
+        const value = `option-${i + 1}`;
         generatedOptions.push({ label, value });
     }
 
@@ -28,12 +28,11 @@ export default function App() {
         <div className="flex flex-col">
             <div className="flex">
                 <Dropdown
-                    width="lg"
-                    options={defaultOptions}
+                    multiSelect
+                    options={generatedOptions}
                     onSelectionsChange={handleDropdownChange}
                 />
                 <Dropdown
-                    multiSelect
                     options={generatedOptions}
                     onSelectionsChange={handleDropdownChange}
                 />
